@@ -66,8 +66,8 @@ int i;
 string_item *si;
   if(list_size>size)return;
   size=__malloc_resize_value(size);
-  new_str_list=(ulong*)malloc(size*4);
-  memcpy(new_str_list, str_list, list_size*4);
+  new_str_list=(ulong*)malloc(size*(sizeof(ulong)));
+  memcpy(new_str_list, str_list, list_size*sizeof(ulong));
   for(i=list_size;i<size;i++) {
     si=new string_item();
     new_str_list[i]=(ulong)si;

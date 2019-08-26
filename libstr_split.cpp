@@ -5,7 +5,7 @@ split(dest, key, src)
   example: split(dest, ",", "1,2,3") will create
   array "1", "2", "3" within dest
 ***********************************************/
-ulong split(string *dest, char *key, char *src) {
+ulong split(string *dest, const char *key, char *src) {
 int i, z, ssl=strlen(src), ksl=strlen(key);
 byte x;
 ulong lp=0, split_count=0, adv_sc=0;
@@ -32,7 +32,7 @@ string_item *si=(string_item*)dest->str_list[0];
   dest->str_count=split_count;
   return 0;
 }
-ulong split_eq(string *dest, char *key, char *src) {
+ulong split_eq(string *dest, const char *key, char *src) {
 int i, z, ssl=strlen(src), ksl=strlen(key);
 byte x;
 ulong lp=0, split_count=0, adv_sc=0;
@@ -71,10 +71,10 @@ string_item *si=(string_item*)dest->str_list[0];
   dest->str_count=split_count;
   return 0;
 }
-ulong split   (string *dest, char *key, string *src, ulong str_num = 0) { return split   (dest, key, strptr(src, str_num)); }
-ulong split_eq(string *dest, char *key, string *src, ulong str_num = 0) { return split_eq(dest, key, strptr(src, str_num)); }
+ulong split   (string *dest, const char *key, string *src, ulong str_num = 0) { return split   (dest, key, strptr(src, str_num)); }
+ulong split_eq(string *dest, const char *key, string *src, ulong str_num = 0) { return split_eq(dest, key, strptr(src, str_num)); }
 
-ulong split(string *dest, char *key, ulong str_num = 0) {
+ulong split(string *dest, const char *key, ulong str_num = 0) {
 string_item *si=dest->getsi(str_num);
 char *src;
 ulong r;
@@ -85,7 +85,7 @@ ulong r;
   return r;
 }
 
-ulong split_eq(string *dest, char *key, ulong str_num = 0) {
+ulong split_eq(string *dest, const char *key, ulong str_num = 0) {
 string_item *si=dest->getsi(str_num);
 char *src;
 ulong r;

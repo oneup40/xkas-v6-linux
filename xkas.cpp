@@ -51,7 +51,7 @@ typedef struct {
 file_item file_list[512];
 ulong file_count;
 
-void error(byte t, char *s, ...) {
+void error(byte t, const char *s, ...) {
 va_list args;
 char str[16384];
 int i;

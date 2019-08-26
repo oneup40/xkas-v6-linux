@@ -2,7 +2,7 @@
 replace(str, key, token) : replace_eq(str, key, token)
   replaces all instances of key with token from within str
 *********************************************************/
-void replace(string *str, char *key, char *token, ulong str_num = 0) {
+void replace(string *str, const char *key, const char *token, ulong str_num = 0) {
 string_item *si=str->getsi(str_num);
 int i, z, ksl=strlen(key), tsl=strlen(token);
 ulong replace_count=0, size=si->length;
@@ -33,7 +33,7 @@ char *data;
   free(data);
 }
 
-void replace_eq(string *str, char *key, char *token, ulong str_num = 0) {
+void replace_eq(string *str, const char *key, const char *token, ulong str_num = 0) {
 string_item *si=str->getsi(str_num);
 int i, l, z, ksl=strlen(key), tsl=strlen(token);
 byte x;

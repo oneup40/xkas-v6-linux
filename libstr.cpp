@@ -1,3 +1,5 @@
+#include "support.cpp"
+
 ulong __malloc_resize_value(ulong val)
 {
 int i;
@@ -121,7 +123,7 @@ string_item *si=str->getsi(str_num);
 }
 
 //functions used before being defined
-void strcpy(string *dest, char *src, ulong str_num);
+void strcpy(string *dest, const char *src, ulong str_num);
 void strcpy(string *dest, string *src, ulong dest_str_num, ulong src_str_num);
 char *strptr(string *str, ulong str_num);
 
@@ -143,7 +145,7 @@ string_item *si=str->getsi(str_num);
 strcat(dest, src)
   attaches dest onto the end of src
 **********************************/
-void strcat(string *dest, char *src, ulong str_num = 0) {
+void strcat(string *dest, const char *src, ulong str_num = 0) {
 ulong src_strlen = strlen(src), true_src_strlen;         //get source string length
 string_item *si=dest->getsi(str_num);                    //set class pointer to dest string
   true_src_strlen = src_strlen;                          //save a backup of original source string length
@@ -169,7 +171,7 @@ strinsert(dest, pos, src)
   inserts src into dest at pos
   example: strinsert("tt", 1, "es")="test"
 *****************************************/
-void strinsert(string *dest, ulong pos, char *src, ulong str_num = 0) {
+void strinsert(string *dest, ulong pos, const char *src, ulong str_num = 0) {
 ulong src_strlen = strlen(src), true_src_strlen;
 string_item *si=dest->getsi(str_num);
 string *t=new string();
@@ -218,7 +220,7 @@ strcmp(dest, src) : stricmp(dest, src)
   compares dest to src, if they match, function
   will return 0 (true), otherwise, 1 (false)
 **********************************************/
-byte strcmp(string *dest, char *src, ulong str_num = 0) {
+byte strcmp(string *dest, const char *src, ulong str_num = 0) {
 string_item *si=dest->getsi(str_num);
   if(!strcmp(si->s, src))return 0; //true,  equal
   return 1;                        //false, not equal
@@ -226,7 +228,7 @@ string_item *si=dest->getsi(str_num);
 byte strcmp(string *dest, string *src, ulong dest_str_num = 0, ulong src_str_num = 0) {
   return strcmp(dest, strptr(src, src_str_num), dest_str_num); }
 
-byte stricmp(char *dest, char *src) {
+byte stricmp(char *dest, const char *src) {
 ulong dl=strlen(dest), sl=strlen(src);
 int i;
   if(dl!=sl)return 1;//false
@@ -239,7 +241,7 @@ int i;
   }
   return 0;//true
 }
-byte stricmp(string *dest, char *src, ulong str_num = 0) { return stricmp(strptr(dest, str_num), src); }
+byte stricmp(string *dest, const char *src, ulong str_num = 0) { return stricmp(strptr(dest, str_num), src); }
 byte stricmp(string *dest, string *src, ulong dest_str_num = 0, ulong src_str_num = 0) {
   return stricmp(strptr(dest, dest_str_num), strptr(src, src_str_num));
 }
@@ -248,7 +250,7 @@ byte stricmp(string *dest, string *src, ulong dest_str_num = 0, ulong src_str_nu
 strcpy(dest, src)
   copies src into dest
 *********************/
-void strcpy(string *dest, char *src, ulong str_num = 0) {
+void strcpy(string *dest, const char *src, ulong str_num = 0) {
 ulong src_strlen = strlen(src);                          //get source string length
 string_item *si=dest->getsi(str_num);                    //set class pointer to dest string
   if(si->max_length < src_strlen)si->alloc(src_strlen);  //if src length exceeds dest string length, resize dest string
@@ -283,7 +285,7 @@ strpos(str, key) : strpos_eq(str, key)
   will return the first position where key exists within
   str, if key does not exist within str, will return -1
 *******************************************************/
-ulong strpos(char *str, char *key) {
+ulong strpos(char *str, const char *key) {
 int i, z, ssl=strlen(str), ksl=strlen(key);
 byte x;
   if(ksl>ssl)return null;
@@ -292,11 +294,11 @@ byte x;
   }
   return null;
 }
-ulong strpos(string *str, char *key, ulong str_num = 0) { return strpos(strptr(str, str_num), key); }
+ulong strpos(string *str, const char *key, ulong str_num = 0) { return strpos(strptr(str, str_num), key); }
 ulong strpos(string *str, string *key, ulong str_num = 0, ulong key_num = 0) {
   return strpos(strptr(str, str_num), strptr(key, key_num)); }
 
-ulong strpos_eq(char *str, char *key) {
+ulong strpos_eq(const char *str, const char *key) {
 int i, z, ssl=strlen(str), ksl=strlen(key);
 byte x;
   if(ksl>ssl)return null;
@@ -313,7 +315,7 @@ byte x;
   }
   return null;
 }
-ulong strpos_eq(string *str, char *key, ulong str_num = 0) { return strpos_eq(strptr(str, str_num), key); }
+ulong strpos_eq(string *str, const char *key, ulong str_num = 0) { return strpos_eq(strptr(str, str_num), key); }
 ulong strpos_eq(string *str, string *key, ulong str_num = 0, ulong key_num = 0) {
   return strpos_eq(strptr(str, str_num), strptr(key, key_num)); }
 
@@ -323,7 +325,7 @@ strtr(str, before, after)
   them with after[], the before and after are 1-byte
   arrays. example: strtr(str, "ABCDEF", "abcdef")
 ********************************************************/
-void strtr(string *str, char *before, char *after, ulong str_num = 0) {
+void strtr(string *str, const char *before, const char *after, ulong str_num = 0) {
 string_item *si=str->getsi(str_num);
 int i, l, ssl=strlen(before);
   if(strlen(after)!=ssl)return; //invalid strtr arguments
@@ -339,16 +341,16 @@ strbegin(str, key) : stribegin(str, key)
   if the beginning of str matches key, function will return
   0 (true), otherwise function will return 1 (false)
 **********************************************************/
-byte strbegin(char *str, char *key) {
+byte strbegin(const char *str, const char *key) {
 int i, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return 1;
   if(!memcmp(str, key, ksl))return 0;
   return 1;
 }
-byte strbegin(string *str, char *key, ulong str_num = 0) { return strbegin( strptr(str, str_num), key); }
+byte strbegin(string *str, const char *key, ulong str_num = 0) { return strbegin( strptr(str, str_num), key); }
 byte strbegin(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { return strbegin( strptr(str, str_num), strptr(key, key_num) ); }
 
-byte stribegin(char *str, char *key) {
+byte stribegin(const char *str, const char *key) {
 int i, z, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return 1;
   for(i=z=0;i<ksl;i++, z++) {
@@ -362,7 +364,7 @@ int i, z, ssl=strlen(str), ksl=strlen(key);
   }
   return 0;
 }
-byte stribegin(string *str, char *key, ulong str_num = 0) { return stribegin( strptr(str, str_num), key); }
+byte stribegin(string *str, const char *key, ulong str_num = 0) { return stribegin( strptr(str, str_num), key); }
 byte stribegin(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { return stribegin( strptr(str, str_num), strptr(key, key_num) ); }
 
 /****************************************************
@@ -370,16 +372,16 @@ strend(str, key) : striend(str, key)
   if the end of str matches key, function will return
   0 (true), otherwise function will return 1 (false)
 ****************************************************/
-byte strend(char *str, char *key) {
+byte strend(char *str, const char *key) {
 int i, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return 1;
   if(!memcmp(str+ssl-ksl, key, ksl))return 0;
   return 1;
 }
-byte strend(string *str, char *key, ulong str_num = 0) { return strend( strptr(str, str_num), key); }
+byte strend(string *str, const char *key, ulong str_num = 0) { return strend( strptr(str, str_num), key); }
 byte strend(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { return strend( strptr(str, str_num), strptr(key, key_num) ); }
 
-byte striend(char *str, char *key) {
+byte striend(char *str, const char *key) {
 int i, z, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return 1;
   for(i=ssl-ksl, z=0;i<ssl;i++, z++) {
@@ -393,7 +395,7 @@ int i, z, ssl=strlen(str), ksl=strlen(key);
   }
   return 0;
 }
-byte striend(string *str, char *key, ulong str_num = 0) { return striend( strptr(str, str_num), key); }
+byte striend(string *str, const char *key, ulong str_num = 0) { return striend( strptr(str, str_num), key); }
 byte striend(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { return striend( strptr(str, str_num), strptr(key, key_num) ); }
 
 /*********************************************************
@@ -401,7 +403,7 @@ strltrim(str, key) : striltrim(str, key)
   if key matches the beginning of str, then key is removed
   from the beginning of str
 *********************************************************/
-void strltrim(char *str, char *key) {
+void strltrim(char *str, const char *key) {
 int i, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return;
   if(!strbegin(str, key)) {
@@ -410,7 +412,7 @@ int i, ssl=strlen(str), ksl=strlen(key);
   }
 }
 
-void strltrim(string *str, char *key, ulong str_num = 0) {
+void strltrim(string *str, const char *key, ulong str_num = 0) {
 int i, ksl;
 string_item *si=str->getsi(str_num);
   if(!strbegin(str, key, str_num)) {
@@ -422,7 +424,7 @@ string_item *si=str->getsi(str_num);
 }
 void strltrim(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { strltrim(str, strptr(key, key_num), str_num); }
 
-void striltrim(char *str, char *key) {
+void striltrim(char *str, const char *key) {
 int i, ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return;
   if(!stribegin(str, key)) {
@@ -431,7 +433,7 @@ int i, ssl=strlen(str), ksl=strlen(key);
   }
 }
 
-void striltrim(string *str, char *key, ulong str_num = 0) {
+void striltrim(string *str, const char *key, ulong str_num = 0) {
 int i, ksl;
 string_item *si=str->getsi(str_num);
   if(!stribegin(str, key, str_num)) {
@@ -448,7 +450,7 @@ strrtrim(str, key) : strirtrim(str, key)
   if key matches the end of str, then key is removed
   from the beginning of str
 ***************************************************/
-void strrtrim(char *str, char *key) {
+void strrtrim(char *str, const char *key) {
 int ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return;
   if(!strend(str, key)) {
@@ -457,7 +459,7 @@ int ssl=strlen(str), ksl=strlen(key);
   }
 }
 
-void strrtrim(string *str, char *key, ulong str_num = 0) {
+void strrtrim(string *str, const char *key, ulong str_num = 0) {
 int ksl;
 string_item *si=str->getsi(str_num);
 char *s=si->s;
@@ -469,7 +471,7 @@ char *s=si->s;
 }
 void strrtrim(string *str, string *key, ulong str_num = 0, ulong key_num = 0) { strrtrim(str, strptr(key, key_num), str_num); }
 
-void strirtrim(char *str, char *key) {
+void strirtrim(char *str, const char *key) {
 int ssl=strlen(str), ksl=strlen(key);
   if(ksl>ssl)return;
   if(!striend(str, key)) {
@@ -478,7 +480,7 @@ int ssl=strlen(str), ksl=strlen(key);
   }
 }
 
-void strirtrim(string *str, char *key, ulong str_num = 0) {
+void strirtrim(string *str, const char *key, ulong str_num = 0) {
 int ksl;
 string_item *si=str->getsi(str_num);
 char *s=si->s;

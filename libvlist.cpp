@@ -17,8 +17,8 @@ ulong *list, *newlist, size, newsize, max_size;
   void alloc(ulong size) {
     if(size<max_size)return;
     newsize=__vector_resize(size);
-    newlist=(ulong*)malloc(newsize*4);
-    memcpy(newlist, list, max_size*4);
+    newlist=(ulong*)malloc(newsize*sizeof(ulong));
+    memcpy(newlist, list, max_size*sizeof(ulong));
     free(list);
     list=newlist;
     max_size=newsize;
@@ -45,7 +45,7 @@ ulong *list, *newlist, size, newsize, max_size;
     list = 0;
     size = 0;
     max_size = 8;
-    list=(ulong*)malloc(8*4);
+    list=(ulong*)malloc(8*sizeof(ulong));
   }
 
   ~vectorlist() {

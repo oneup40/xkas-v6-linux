@@ -11,4 +11,4 @@ before_install:
 
 script:
   - echo "using $(nproc) cores"
-  - docker run -e CXX=${CXX} -v ${pwd}:/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"
+  - docker run -e CXX=${CXX} -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"

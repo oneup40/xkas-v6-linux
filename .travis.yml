@@ -1,0 +1,14 @@
+language: generic
+sudo: required
+services:
+  - docker
+env:
+  - DOCKER_TAG=archlinux-x64 CXX=clang++
+  - DOCKER_TAG=archlinux-x64 CXX=g++
+
+before_install:
+  - docker pull oneup40/xkas-v6-linux-build:${DOCKER_TAG}
+
+script:
+  - echo "using $(nproc) cores"
+  - docker run -e CXX=${CXX} -v ${pwd}:/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"

@@ -18,4 +18,6 @@ before_install:
 script:
   - echo "using $(nproc) cores"
   - docker run -e CXX=${CXX} -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"
+#XXX
+  - echo "/test/run_tests.sh $encrypted_25b8a25769a5_key $encrypted_25b8a25769a5_iv"
   - docker run -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "/test/run_tests.sh $encrypted_25b8a25769a5_key $encrypted_25b8a25769a5_iv"

@@ -5,12 +5,12 @@ services:
 env:
   - DOCKER_TAG=archlinux-x64 CXX=clang++
   - DOCKER_TAG=archlinux-x64 CXX=g++
-  - DOCKER_TAG=ubuntu-1604-x64 CXX=clang++
-  - DOCKER_TAG=ubuntu-1604-x64 CXX=g++
-  - DOCKER_TAG=ubuntu-latest-x64 CXX=clang++
-  - DOCKER_TAG=ubuntu-latest-x64 CXX=g++
-  - DOCKER_TAG=ubuntu-rolling-x64 CXX=clang++
-  - DOCKER_TAG=ubuntu-rolling-x64 CXX=g++
+#  - DOCKER_TAG=ubuntu-1604-x64 CXX=clang++
+#  - DOCKER_TAG=ubuntu-1604-x64 CXX=g++
+#  - DOCKER_TAG=ubuntu-latest-x64 CXX=clang++
+#  - DOCKER_TAG=ubuntu-latest-x64 CXX=g++
+#  - DOCKER_TAG=ubuntu-rolling-x64 CXX=clang++
+#  - DOCKER_TAG=ubuntu-rolling-x64 CXX=g++
 
 before_install:
   - docker pull oneup40/xkas-v6-linux-build:${DOCKER_TAG}
@@ -18,3 +18,4 @@ before_install:
 script:
   - echo "using $(nproc) cores"
   - docker run -e CXX=${CXX} -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"
+  - docker run -e -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "/test/run_tests.sh $encrypted_25b8a25769a5_key $encrypted_25b8a25769a5_iv"

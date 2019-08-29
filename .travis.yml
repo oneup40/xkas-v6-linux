@@ -14,6 +14,9 @@ env:
 
 before_install:
   - docker pull oneup40/xkas-v6-linux-build:${DOCKER_TAG}
+  - openssl aes-256-cbc -K $encrypted_25b8a25769a5_key -iv $encrypted_25b8a25769a5_iv -in test.sfc.enc -out test.sfc -d
+  - echo openssl aes-256-cbc -K $encrypted_25b8a25769a5_key -iv $encrypted_25b8a25769a5_iv -in test.sfc.enc -out test.sfc -d
+  - md5sum test.sfc
 
 script:
   - echo "using $(nproc) cores"

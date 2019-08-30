@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/oneup40/xkas-v6-linux.svg?branch=master)](https://travis-ci.com/oneup40/xkas-v6-linux)
+
 Description
 ===========
 

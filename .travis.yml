@@ -19,3 +19,7 @@ script:
   - echo "using $(nproc) cores"
   - docker run -e CXX=${CXX} -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "cd /project && make -j release"
   - docker run -v $(pwd):/project oneup40/xkas-v6-linux-build:${DOCKER_TAG} /bin/sh -c "/test/run_tests.sh $encrypted_25b8a25769a5_key $encrypted_25b8a25769a5_iv"
+
+notifications:
+  slack:
+    secure: XZMEs2Av8ClUeChcpL8UMupqRzG7TneEvuHmGu9BJWdaMHN8R53EO04asssLYfyCf4Z+5Xov5IAV+5yVEvz9HUb1OZD20VGzi6UjJWfc2Jy3NKbP17otkhWc5uYKnfMhPJjIjRAdksqnYblVla9y0tVdbGQKB4qlObW8u7n916SdxGoV3wsGsc2wNi8smyGhozVTfchzIiWY7Ujb+UmDd/lWKmgATKR9gke/ggggOt2VCH9+1E69+ZhqjMKrqqugKR9dfJZ2N67YruMrWTk0v3kdTFnELwQftPah0hEZYsFybiSoCBrfO4UsTkag3DjwVw4i83q2gUix+Z/0fbYtKQaZpgFGclS22YGhHywghUshh7ThziGjDbyfxdsemNxFdlGDb68g8Bq306setvs3KJsjDUuIxqGdps9pBrU2L0K/wP38zkuWc03pJ29h5iXDHKOffEfCg2rAH9fzsHgOkBRAnjLWkEZZoS1xVuJzwPjCpwjDKDnMA4P/NPuXCV7qhQnvEpaOxQwjHaKCphSZANHx1qWhw06KYsQwLFtHnbUn8eb9CzjUMgrFtvZc8y21hA+Lm1bP3PgBYqiAK7kKZjbaa+ZaByC23XC3ZMVH/ZNUFQMAmiHxrRMI33ySALcA9CSVZA7vhS3LYj9ECFNorQu5sz9YrlZ2lhvBIPPOECw=

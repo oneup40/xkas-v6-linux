@@ -691,15 +691,15 @@ ulong pc=state.pc+s;
   if(pass) {
     if(s==1) {   //byte
       if(pc>v) { //negative branch
-        if((v-pc)<0xffffff80)error(0, "negative branch too long, exceeded bounds");
+        if((v-pc)<0xffffffffffffff80UL)error(0, "negative branch too long, exceeded bounds");
       } else {   //positive branch
-        if((v-pc)>0x0000007f)error(0, "positive branch too long, exceeded bounds");
+        if((v-pc)>0x000000000000007fUL)error(0, "positive branch too long, exceeded bounds");
       }
     } else {     //word
       if(pc>v) { //negative branch
-        if((v-pc)<0xffff8000)error(0, "negative branch too long, exceeded bounds");
+        if((v-pc)<0xffffffffffff8000UL)error(0, "negative branch too long, exceeded bounds");
       } else {   //positive branch
-        if((v-pc)>0x00007fff)error(0, "positive branch too long, exceeded bounds");
+        if((v-pc)>0x0000000000007fffUL)error(0, "positive branch too long, exceeded bounds");
       }
     }
   }
